@@ -13,7 +13,7 @@ router.use(session({
     resave: false,
     // should we resave the information change?
 
-    saveUninitialized: true
+    saveUninitialized: false
 }));
 
 const flash = require('express-flash');
@@ -85,7 +85,7 @@ router.post('/login', async (req, res) => {
             console.log(user.password)
             const passwordIsValid = bcrypt.compareSync(password, user.password);
             if (passwordIsValid) {
-                res.redirect('/');
+                res.render('pages/home', { user } );
             } else {
                 req.flash("error", "Password is not correct");
                 res.redirect('/login');
@@ -109,10 +109,34 @@ router.get('/', (req, res) => {
 // Logout set-up
 
 router.get("/logout", (req, res) => {
-    req.logout();
-    req.flash("success_msg", "You have logged successfully");
-    res.redirect("/login");
-  });
+    if (req.session) {
+        req.session.destroy(err => {
+          if (err) {
+              console.log(err);
+              res.redirect("/");
+          } else {
+              res.redirect("/login");
+          }
+        });
+      } else {
+        res.end()
+      }
+});
+
+// router.delete('/logout', (req, res) => {
+//     if (req.session) {
+//       req.session.destroy(err => {
+//         if (err) {
+//             res.status(400).send('Unable to log out')
+//         } else {
+//             req.flash("success_msg", "You have logged out successfully");
+//             res.redirect("/login");
+//         }
+//       });
+//     } else {
+//       res.end()
+//     }
+// })
 
 router.get('/recover_password', (req,res) => {
     res.render('pages/recover_password');

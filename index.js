@@ -22,7 +22,7 @@ const schedulesRouter = require('./routes/schedules');
 
 // Middleware routes
 app.use('/', homeRouter);
-app.use('/schedules', schedulesRouter);
+// app.use('/schedules', schedulesRouter);
 
 
 
