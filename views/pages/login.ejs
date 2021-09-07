@@ -1,0 +1,24 @@
+<%- include('../partials/head')%>
+
+    <title>Login page</title>
+</head>
+<body>
+    <%- include('../partials/navbar')%>
+    <h1 class="text-center">Log in to access the MR Coffee schedule app!</h1>
+    <div class="container">
+        <form action="/users/login" method="POST" id="create-user-form" novalidate>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="email" name="email" aria-describedby="email">
+            <div id="email" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password">
+            </div>
+            <button type="submit" class="btn btn-secondary" value="Register">Log in</button>
+            <a href="/users/register" class="btn btn-secondary">Register</a>
+        </form>
+    </div>
+    
+<%- include('../partials/footer')%>
