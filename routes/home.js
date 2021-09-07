@@ -11,9 +11,9 @@ router.use(session({
     // should we keep the data secret? 
 
     resave: false,
-    // should we resave the information cahnge?
+    // should we resave the information change?
 
-    saveUninitialized: false
+    saveUninitialized: true
 }));
 
 const flash = require('express-flash');
@@ -45,12 +45,10 @@ router.post('/register', async (req, res) => {
 
         // encryption with Bcrypt
         let hashedPassword = await bcrypt.hash(password, 10);
-        console.log(hashedPassword);
 
         try {
             const userExists = await db.oneOrNone(`SELECT * FROM users WHERE email = $1;`, [email]);
-            console.log(userExists)
-
+            
             if ( !userExists ) {
                 await db.none(
                     `INSERT INTO users (firstname, lastname, email, password)
@@ -75,13 +73,49 @@ router.get('/login', (req, res) => {
     res.render('pages/login');
 });
 
+router.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        const user = await db.oneOrNone(`SELECT * FROM users WHERE email = $1;`, [email]);
+        console.log(user)
+        
+        if ( user ) {
+            console.log(password);
+            console.log(user.password)
+            const passwordIsValid = bcrypt.compareSync(password, user.password);
+            if (passwordIsValid) {
+                res.redirect('/');
+            } else {
+                req.flash("error", "Password is not correct");
+                res.redirect('/login');
+            }
+        } else {
+            req.flash("error", "Email is not registered");
+            res.redirect('/login');
+        }
+    } catch (err) {
+        console.log(err);
+    }    
+}
+);
+
 
 // Home page is only accessible once the user is logged in
 router.get('/', (req, res) => {
-    res.render('pages/home', { user: "Olga "});
+    res.render('pages/home', { user: "user" });
 });
 
+// Logout set-up
 
+router.get("/logout", (req, res) => {
+    req.logout();
+    req.flash("success_msg", "You have logged successfully");
+    res.redirect("/login");
+  });
 
+router.get('/recover_password', (req,res) => {
+    res.render('pages/recover_password');
+});
 
 module.exports = router;
