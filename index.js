@@ -13,6 +13,10 @@ app.use(express.urlencoded( { extended: false }));
 // Setting up our static folder
 app.use(express.static(path.join(__dirname,'public')));
 
+//Body Parser
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 // Set view engine as EJS 
 app.set('view engine', 'ejs');
 
