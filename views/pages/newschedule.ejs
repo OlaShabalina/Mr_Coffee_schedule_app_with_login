@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+</main>
+    <%- include('../partials/head')%>
+    <!--HEADER GOES HERE-->
+    <h1 style = "color: purple "> NEW USER SCHEDULE</h1>
+
+<form action="/new" method="post">
+    <div>
+        <label for="username">Insert Your Username:</label>
+        <input id="username" type="text" name="username">
+    </div>
+
+    <div>
+        <label for="day">Preferred Working Days:</label>
+        <input id="day" type="text" name="day">
+    </div>
+
+    <div>
+        <label for="start_at"> Shift Start Time: </label>
+        <input id="start_at" type="text" name="start_at" >
+    </div>
+
+    <div>
+        <label for="end_at"> Shift End Time: </label>
+        <input id="end_at" type="text" name="end_at" >
+    </div>
+
+
+    <button type="submit">Submit</button>
+
+
+
+    </form>
+</main>
+    <!--FOOTER GOES HERE-->
+</body>
+</html>
