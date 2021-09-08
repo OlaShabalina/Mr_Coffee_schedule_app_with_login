@@ -24,18 +24,30 @@ router.get('/register', (req, res) => {
 });
 
 router.post('/register', async (req, res) => {
-    let { firstname, lastname, email, password } = req.body;
+    let { firstname, lastname, email, password, confirmed_password } = req.body;
     
-    // Backend validation for the form
-    let errors = [];
+    console.log('HELLO')
+    console.log(firstname)
+    console.log(password)
+    console.log(confirmed_password)
 
-    if (!firstname || !lastname || !email || !password ) {
+    // Backend validation for the form
+    const errors = [];
+
+    if (!firstname || !lastname || !email || !password || !confirmed_password) {
+        console.log(errors)
         errors.push({ message: "Please enter all fields." });
     }
 
     if ( password.length < 6 ) {
         errors.push({ message: "Password should be at least 6 characters." });
     }
+
+    if ( password !== confirmed_password ) {
+        errors.push({ message: "Your confirmation password doesn't match" });
+    }
+
+    errors.forEach(error => console.log(error.message))
 
     if (errors.length > 0) {
         res.render('pages/register', { errors });
@@ -110,7 +122,6 @@ router.get("/logout", (req, res) => {
         req.session.destroy(err => {
           if (err) {
               console.log(err);
-              res.redirect("/");
           } else {
               res.redirect("/login");
           }
