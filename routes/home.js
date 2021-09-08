@@ -1,8 +1,7 @@
-require("dotenv").config();
 const express = require('express');
 const router = express.Router();
 const db = require('../database');
-const bcrypt = require('bcrypt'); // Password encryption
+const bcrypt = require('bcrypt');
 
 // Authentification modules 
 const session = require('express-session');
@@ -103,10 +102,8 @@ router.post('/login', async (req, res) => {
 
 // Home page is only accessible once the user is logged in
 router.get('/', (req, res) => {
-    res.render('pages/home', { user: "user" });
-});
-
-// Logout set-up
+    res.render('pages/home');
+})
 
 router.get("/logout", (req, res) => {
     if (req.session) {
@@ -138,8 +135,5 @@ router.get("/logout", (req, res) => {
 //     }
 // })
 
-router.get('/recover_password', (req,res) => {
-    res.render('pages/recover_password');
-});
 
 module.exports = router;
