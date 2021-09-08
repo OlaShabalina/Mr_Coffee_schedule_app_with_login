@@ -1,0 +1,48 @@
+<%- include('../partials/head')%>
+
+    <title>Register page</title>
+</head>
+<body>
+    
+    <h1 class="text-center">Register to use <br> MR Coffee schedule app!</h1>
+
+    
+    <div class="container d-table align-middle">
+        <ul>
+            <% if (typeof errors != 'undefined') { %> <% errors.forEach(error => { %>
+                    <li class="text-danger"><%= error.message %> </li>
+    
+                <% }) %>
+            <% } %>
+        </ul>
+        <form action="/register" method="POST" id="create-user-form" novalidate>
+            <div class="mb-3">
+                <label for="firstname" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="firstname" name="firstname" placeholder="First Name">
+            </div>
+            <div class="mb-3">
+                <label for="lastname" class="form-label">Surname</label>
+                <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last Name">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="email" name="email" aria-describedby="email">
+            <div id="email" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password">
+            </div>
+            <div class="mb-3">
+                <label for="confirmed_password" class="form-label">Confirm password</label>
+                <input type="password" class="form-control" id="confirmed_password" name="confirmed_password">
+            </div>
+            <button type="submit" class="btn btn-secondary" value="Register">Register</button>
+            <a href="/login" class="btn btn-secondary">Already registered</a>
+        </form>
+    </div>
+    
+    <script src="register-form-validation.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+</body>
+</html>

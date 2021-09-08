@@ -1,15 +1,17 @@
-1. Make sure you are in the folder you want to install files into. Clone repo
+1. clone repo
 
 ```bash
 git clone https://github.com/OlaShabalina/incode_project4.git
 ```
 
-2. Install dependencies
+2. install dependencies
+
 ```bash
+cd incode5-group-work
 npm install
 ```
 
-3. Rename .env.sample to .env and fill out credentials, remove ## where necessary
+3. Rename .env.sample to .env and fill out credentials
 
 4. Choose your task and work on it 
 
