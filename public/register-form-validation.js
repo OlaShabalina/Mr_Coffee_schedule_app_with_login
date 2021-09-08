@@ -5,6 +5,7 @@ const firstname = document.querySelector("#firstname");
 const lastname = document.querySelector("#lastname");
 const email = document.querySelector("#email");
 const password = document.querySelector("#password");
+const confirmedPassword = document.querySelector("#confirmed_password");
 
 createUserForm.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -13,8 +14,9 @@ createUserForm.addEventListener('submit', (e) => {
   validate(lastname, isNameValid);
   validate(email, isEmailValid);
   validate(password, isPasswordValid);
+  validateConfirmedPassword(password, confirmedPassword);
 
-  if (validate(firstname, isNameValid) && validate(lastname, isNameValid) && validate(email, isEmailValid) && validate(password, isPasswordValid)) {
+  if (validate(firstname, isNameValid) && validate(lastname, isNameValid) && validate(email, isEmailValid) && validate(password, isPasswordValid) && validateConfirmedPassword(password, confirmedPassword)) {
     createUserForm.submit();
   }
 
@@ -42,6 +44,20 @@ function isNameValid(input) {
       return password.length >= 5 && !password.includes('password');
   }
 
+   //Function to validate second password
+
+   function validateConfirmedPassword (password1, password2) {
+    password2.classList.remove('btn-success');
+    password2.classList.remove('btn-danger');
+    if (password1.value === password2.value && password2.value !== '') {
+      password2.classList.add('btn-success');
+      return true;
+    } else {
+      password2.classList.add('btn-danger');
+      return false;
+    };
+   }
+   
   // Class change function based on validation
 
   function validate(input, ValidateFunction) {
