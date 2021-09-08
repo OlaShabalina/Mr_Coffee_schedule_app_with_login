@@ -1,0 +1,41 @@
+<%- include('../partials/head')%>
+    <title>New schedule</title>
+</head>
+<body>
+    <%- include('../partials/navbar')%>
+</main>
+    <!--HEADER GOES HERE-->
+    <div class="container">
+    <h1 style = "color: purple "> NEW USER SCHEDULE</h1>
+
+<form action="/new" method="post">
+    <div>
+        <label for="username">Insert Your Username:</label>
+        <input id="username" type="text" name="username">
+    </div>
+
+    <div>
+        <label for="day">Preferred Working Days:</label>
+        <input id="day" type="text" name="day">
+    </div>
+
+    <div>
+        <label for="start_at"> Shift Start Time: </label>
+        <input id="start_at" type="text" name="start_at" >
+    </div>
+
+    <div>
+        <label for="end_at"> Shift End Time: </label>
+        <input id="end_at" type="text" name="end_at" >
+    </div>
+
+
+    <button type="submit">Submit</button>
+
+
+
+    </form>
+    </div>
+</main>
+    <!--FOOTER GOES HERE-->
+    <%- include('../partials/footer')%>
