@@ -21,6 +21,7 @@ router.get("/", (req, res) => {
 //         res.render('pages/home');
 // })
 
+
 router.post('/', (req, res) => {
     console.log(req.body)
     db.none('INSERT INTO schedules(username, day, start_at, end_at) VALUES($1, $2, $3, $4);', [req.body.username, req.body.day, req.body.start_at, req.body.end_at])
@@ -35,12 +36,7 @@ router.post('/', (req, res) => {
 
   router.get('/newschedule', (req, res) => {
     res.render('pages/newschedule')
-  });
-
-  router.get('/:id', (req, res) => {
-    res.render('')
-  })
-  
+  });  
 
 module.exports = router;
 
@@ -48,4 +44,4 @@ module.exports = router;
 
 // router.get('/:id', (req, res) => {
 //     res.render();
-// })
+
