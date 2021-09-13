@@ -114,8 +114,10 @@ router.post('/login', async (req, res) => {
 
 // Home page is only accessible once the user is logged in
 router.get('/', (req, res) => {
+    // const { user } = req.params;
+    // console.log(req.session)
     res.render('pages/home');
-})
+});
 
 router.get("/logout", (req, res) => {
     if (req.session) {

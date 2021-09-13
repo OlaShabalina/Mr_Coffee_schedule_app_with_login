@@ -2,9 +2,24 @@ const express = require('express');
 const router = express.Router();
 const db = require('../database');
 
-router.get('/', (req, res) => {
-    res.send('check')
-})
+//read all data from databases && set data received as parameter for front end
+router.get("/", (req, res) => {
+    db.any('SELECT * FROM schedules')
+        .then(function(databaseschedules) {
+            console.log(databaseschedules)
+            res.render('pages/schedules', {
+                schedules:databaseschedules
+              });
+        })
+        
+        .catch(function(error) {
+            console.log(error)
+        });
+    });
+    
+//     router.get('/', (req, res) => {
+//         res.render('pages/home');
+// })
 
 
 router.post('/', (req, res) => {
@@ -18,7 +33,10 @@ router.post('/', (req, res) => {
       res.send(error)
     })
   })
-  
+
+  router.get('/newschedule', (req, res) => {
+    res.render('pages/newschedule')
+  });  
 
 module.exports = router;
 
@@ -26,5 +44,4 @@ module.exports = router;
 
 // router.get('/:id', (req, res) => {
 //     res.render();
-// })
 
