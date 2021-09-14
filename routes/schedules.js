@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../database');
-
+//notes to self to test if github is pushing and pulling correctly
 //read all data from databases && set data received as parameter for front end
 router.get("/", (req, res) => {
     db.any('SELECT * FROM schedules')
