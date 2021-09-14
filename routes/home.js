@@ -1,152 +1,41 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../database');
-const bcrypt = require('bcrypt');
-
-// Authentification modules 
-const session = require('express-session');
-router.use(session({
-    secret: 'secret',
-    // should we keep the data secret? 
-
-    resave: false,
-    // should we resave the information change?
-
-    saveUninitialized: false
-}));
-
-const flash = require('express-flash');
-router.use(flash());
-
-// Registration
-router.get('/register', (req, res) => {
-    res.render('pages/register');
-});
-
-router.post('/register', async (req, res) => {
-    let { firstname, lastname, email, password, confirmed_password } = req.body;
-    
-    console.log('HELLO')
-    console.log(firstname)
-    console.log(password)
-    console.log(confirmed_password)
-
-    // Backend validation for the form
-    const errors = [];
-
-    if (!firstname || !lastname || !email || !password || !confirmed_password) {
-        console.log(errors)
-        errors.push({ message: "Please enter all fields." });
-    }
-
-    if ( password.length < 6 ) {
-        errors.push({ message: "Password should be at least 6 characters." });
-    }
-
-    if ( password !== confirmed_password ) {
-        errors.push({ message: "Your confirmation password doesn't match" });
-    }
-
-    errors.forEach(error => console.log(error.message))
-
-    if (errors.length > 0) {
-        res.render('pages/register', { errors });
-    } else {
-        // Form validation has passed
-
-        // encryption with Bcrypt
-        let hashedPassword = await bcrypt.hash(password, 10);
-
-        try {
-            const userExists = await db.oneOrNone(`SELECT * FROM users WHERE email = $1;`, [email]);
-            
-            if ( !userExists ) {
-                await db.none(
-                    `INSERT INTO users (firstname, lastname, email, password)
-                    VALUES ($1, $2, $3, $4)`, 
-                    [firstname, lastname, email, hashedPassword]);
-                req.flash("success_msg", "You are now registered, please log in");
-                console.log(req.session.flash.success_msg[0])
-                res.redirect('/login');
-            } else {
-                errors.push({ message: "Email is already registered" });
-                res.render('pages/register', { errors });
-            }
-        } catch (err) {
-            console.log(err);
-        }    
-    }
-
-})
-
-//  Login
-router.get('/login', (req, res) => {
-    res.render('pages/login');
-});
-
-router.post('/login', async (req, res) => {
-    const { email, password } = req.body;
-
-    try {
-        const user = await db.oneOrNone(`SELECT * FROM users WHERE email = $1;`, [email]);
-        console.log(user)
-        
-        if ( user ) {
-            console.log(password);
-            console.log(user.password)
-            const passwordIsValid = bcrypt.compareSync(password, user.password);
-            if (passwordIsValid) {
-                res.render('pages/home', { user } );
-            } else {
-                req.flash("error", "Password is not correct");
-                res.redirect('/login');
-            }
-        } else {
-            req.flash("error", "Email is not registered");
-            res.redirect('/login');
-        }
-    } catch (err) {
-        console.log(err);
-    }    
-}
-);
-
 
 // Home page is only accessible once the user is logged in
 router.get('/', (req, res) => {
-    // const { user } = req.params;
-    // console.log(req.session)
-    res.render('pages/home');
+    const userId = req.session.userId;
+    db.any('SELECT users.user_id,firstname,day,start_at,end_at FROM users LEFT JOIN schedules ON users.user_id = schedules.user_id WHERE users.user_id = $1;', [ userId ])
+    .then((userSchedules) => {
+        // generating schedules of the user
+        userSchedules.forEach((schedule) => {
+
+            if (schedule.day !== null) {
+                
+                // converting days of the week from numbers to actual days
+                const week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+                for (let i = 1; i <= 7; i++) {
+                    if (i == schedule.day) {
+                        schedule.day = week[i - 1];
+                    };
+                };   
+
+                // formating time not to show seconds
+                schedule.start_at = schedule.start_at.split(':').slice(0,2).join(':');
+                schedule.end_at = schedule.end_at.split(':').slice(0,2).join(':'); 
+            }
+
+            return schedule;
+        })
+
+        console.log(userSchedules);
+        const userName = userSchedules[0].firstname;
+
+        res.render('pages/home', { userSchedules, userName });
+    })
+    .catch(error => {
+        console.log(error)
+    });
 });
-
-router.get("/logout", (req, res) => {
-    if (req.session) {
-        req.session.destroy(err => {
-          if (err) {
-              console.log(err);
-          } else {
-              res.redirect("/login");
-          }
-        });
-      } else {
-        res.end()
-      }
-});
-
-// router.delete('/logout', (req, res) => {
-//     if (req.session) {
-//       req.session.destroy(err => {
-//         if (err) {
-//             res.status(400).send('Unable to log out')
-//         } else {
-//             req.flash("success_msg", "You have logged out successfully");
-//             res.redirect("/login");
-//         }
-//       });
-//     } else {
-//       res.end()
-//     }
-// })
-
 
 module.exports = router;

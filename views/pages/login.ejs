@@ -16,11 +16,6 @@
             <li class="text-danger"><%= messages.error %></li>
             <% } %> 
         </ul>
-        <ul>
-            <% if (typeof logout_message !== 'undefined') { %> 
-                <li class="text-success"><%= logout_message %></li>
-            <% } %> 
-        </ul>
         </div>
         <form action="/login" method="POST" id="log-in-form" novalidate>
             <div class="mb-3">

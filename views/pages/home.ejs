@@ -5,13 +5,32 @@
 <body>
     <!-- header including nav bar -->
     <%- include('../partials/navbar') %>
-    <h1 class="text-center">Hello <% if (typeof user !== 'undefined') { %>
-        <%= user.firstname %>
-        <% } else { %>
-            <% return ''%>
-            <%}%>!</h1>
-    <h5 class="text-center text-success"> Please see below your schedules for the week:</p>
+    <h1 class="text-center">Hello <%= userName  %>!</h1>
 
+    <h5 class="text-center text-success"> Please see below your schedules for the week:</p>
+        <div class="container">
+        <div class="row gy-4 d-flex align-items-center justify-content-center">
+            <% for (let i = 0; i < userSchedules.length; i++) { %> 
+            <div class="col-sm-6">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <% if (userSchedules[i].day !== null) { %> 
+                        <h5 class="card-title">Schedule <%= i + 1 %></h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><b>Day of the week:</b> <%= userSchedules[i].day %> </li>
+                            <li class="list-group-item"><b>Starts at:</b> <%= userSchedules[i].start_at %> </li>
+                            <li class="list-group-item"><b>Finishes at:</b> <%= userSchedules[i].end_at %> </li>
+                        </ul>   
+                        <% } else { %> 
+                            <p class="text-dark"> You don't have any schedules yet</p>
+                        <% }  %> 
+                    </div>
+                </div>
+            </div> 
+            <% } %> 
+            <a href="/newschedule" class="btn btn-secondary">Register new user</a>
+        </div>
+        </div>
 
 
     <!-- footer and end of page below -->
