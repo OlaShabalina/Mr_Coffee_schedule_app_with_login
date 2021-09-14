@@ -1,15 +1,27 @@
 require('dotenv').config();
 
 const express = require('express');
+// Routes
+const homeRouter = require('./routes/home');
+const registerRouter = require('./routes/register');
+const loginRouter = require('./routes/login');
+const logoutRouter = require('./routes/logout');
+const schedulesRouter = require('./routes/schedules');
+const recoverPasswordRouter = require('./routes/recover-password');
+
+// Session redirection config 
+const {redirectToHome} = require('./middleware');
+const {redirectToLogin} = require('./middleware');
+
 const app = express();
 const session = require('express-session');
 
 const PORT = process.env.PORT || 3000
 const path = require('path');
 
-// Session redirection config 
-const {redirectToHome} = require('./middleware');
-const {redirectToLogin} = require('./middleware');
+// Body Parser
+app.use(express.json());
+app.use(express.urlencoded( { extended: false }));
 
 // Setting up our static folder
 app.use(express.static(path.join(__dirname,'public')));
@@ -35,25 +47,15 @@ app.use(session({
 const flash = require('express-flash');
 app.use(flash());
 
-// Body Parser
-app.use(express.json());
-app.use(express.urlencoded( { extended: false }));
-
 // Set view engine as EJS 
 app.set('view engine', 'ejs');
 
-// Routes
-const homeRouter = require('./routes/home');
-const registerRouter = require('./routes/register');
-const loginRouter = require('./routes/login');
-const logoutRouter = require('./routes/logout');
-const schedulesRouter = require('./routes/schedules');
-
 // Middleware routes
+app.use('/recover_password', recoverPasswordRouter);
 app.use('/register', redirectToHome, registerRouter);
 app.use('/login', redirectToHome, loginRouter);
-app.use('/', homeRouter);
+app.use('/', redirectToLogin, homeRouter);
 app.use('/logout', redirectToLogin, logoutRouter);
-app.use('/schedules', schedulesRouter);
+app.use('/schedules', redirectToLogin, schedulesRouter);
 
 app.listen(PORT, () => console.log(`We are listening on http://localhost:${PORT}`));

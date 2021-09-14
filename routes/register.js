@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
     res.render('pages/register');
 });
 
-router.post('/', async (req, res) => {
+router.post('/', (req, res) => {
     let { firstname, lastname, email, password, confirmed_password } = req.body;
     
 
@@ -38,26 +38,29 @@ router.post('/', async (req, res) => {
     } else {
         // IF it gets here - means the form validation has passed
 
-        // encryption with Bcrypt
-        let hashedPassword = await bcrypt.hash(password, 10);
-
-        try {
-            const userExists = await db.oneOrNone(`SELECT * FROM users WHERE email = $1;`, [email]);
-            
-            if ( !userExists ) {
-                await db.none(
-                    `INSERT INTO users (firstname, lastname, email, password)
-                    VALUES ($1, $2, $3, $4)`, 
-                    [firstname, lastname, email, hashedPassword]);
-                req.flash("success_msg", "You are now registered, please log in");
-                res.redirect('/login');
-            } else {
+        db.oneOrNone("SELECT * FROM users WHERE email = $1;", email)
+        .then(userExists => {
+            if (userExists) {
                 errors.push({ message: "Email is already registered" });
                 res.render('pages/register', { errors });
-            }
-        } catch (err) {
-            console.log(err);
-        }    
+            } else {
+                // Hash password and clean the email
+                const salt = bcrypt.genSaltSync(10);
+                const hash = bcrypt.hashSync(password, salt);
+                const cleanedEmail = email.toLowerCase().trim()
+
+                // savind data in db
+                db.none('INSERT INTO users (firstname, lastname, email, password) VALUES ($1, $2, $3, $4);', [firstname, lastname, cleanedEmail, hash])
+                .then(() => {
+                    req.flash("success_msg", "You are now registered, please log in");
+                    res.redirect('/login');
+                })
+                .catch((error) => {
+                    console.log(error)
+                    res.json(error)
+                });
+            };
+        }); 
     }
 
 })

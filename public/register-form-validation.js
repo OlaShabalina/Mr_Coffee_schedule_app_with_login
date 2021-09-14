@@ -9,7 +9,7 @@ const password = document.querySelector("#password");
 const confirmedPassword = document.querySelector("#confirmed_password");
 
 registerButton.addEventListener('click', (e) => {
-  e.preventDefault();
+  // e.preventDefault();
 
   validate(firstname, isNameValid);
   validate(lastname, isNameValid);
