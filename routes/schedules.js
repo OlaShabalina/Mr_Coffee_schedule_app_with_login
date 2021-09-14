@@ -40,8 +40,12 @@ router.post('/', (req, res) => {
 
 module.exports = router;
 
-//Adding new comment here as placeholder
 
-// router.get('/:id', (req, res) => {
-//     res.render();
 
+app.get ("/id", (req, res) => {
+  const schedules = data.schedules.filter(schedule => schedule.user_id === Number(req.params.id))
+    res.render('pages/userschedule', {
+      schedules: schedules
+    })
+
+})
