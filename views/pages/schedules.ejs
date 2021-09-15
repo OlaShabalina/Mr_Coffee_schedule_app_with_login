@@ -10,13 +10,16 @@
     <% for (let i = 0; i < schedules.length; i++) {%>
     <div class="card" style="width: 18rem;">
         <ul class="list-group list-group-flush"
-          <li class="card-header"><%= schedules[i].user_id %></li>
+          <li class="list-group-item"><%= schedules[i].user_id %></li>
           <li class="list-group-item"><%= schedules[i].day %></li>
           <li class="list-group-item"><%= schedules[i].start_at %></li>
           <li class="list-group-item"><%= schedules[i].end_at %></li>
         </ul>
       </div>
       <% } %>
+
+<a href="/schedules/<%= schedules[i].user_id %>">See shedules of user <%= schedules[i].user_id %></a>
+
 
 </main>
     <!--FOOTER GOES HERE-->
