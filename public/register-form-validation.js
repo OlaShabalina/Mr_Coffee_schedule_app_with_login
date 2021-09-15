@@ -1,4 +1,5 @@
 const createUserForm = document.querySelector('#create-user-form');
+const registerButton = document.querySelector('#registration-button');
 
 // Form elements here
 const firstname = document.querySelector("#firstname");
@@ -7,8 +8,8 @@ const email = document.querySelector("#email");
 const password = document.querySelector("#password");
 const confirmedPassword = document.querySelector("#confirmed_password");
 
-createUserForm.addEventListener('submit', (e) => {
-  e.preventDefault();
+registerButton.addEventListener('click', (e) => {
+  // e.preventDefault();
 
   validate(firstname, isNameValid);
   validate(lastname, isNameValid);
