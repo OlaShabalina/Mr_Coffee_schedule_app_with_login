@@ -22,6 +22,7 @@ router.post('/', (req, res) => {
         db.oneOrNone('SELECT * FROM users WHERE email = $1;', email)
         .then(user => {
             if (!user) {
+                req.flash("error", "Either this email doesn't exists or password is not correct");
                 res.redirect('/login');
             } else {
 
@@ -33,7 +34,7 @@ router.post('/', (req, res) => {
                         req.session.userId = user.user_id;
                         res.redirect('/');
                     } else {
-                        req.flash("error", "Password is not correct");
+                        req.flash("error", "Either this email doesn't exists or password is not correct");
                         res.redirect('/login')
                     }
                 })
