@@ -6,7 +6,7 @@ const {redirectToLogin} = require('../middleware');
 // Home page is only accessible once the user is logged in
 router.get('/', redirectToLogin, (req, res) => {
     const userId = req.session.userId;
-    db.any('SELECT users.user_id,firstname,day,start_at,end_at FROM users LEFT JOIN schedules ON users.user_id = schedules.user_id WHERE users.user_id = $1;', [ userId ])
+    db.any("SELECT users.user_id,firstname,day,TO_CHAR(start_at, 'HH12:MI AM') start_at,TO_CHAR(end_at, 'HH12:MI AM') end_at FROM users LEFT JOIN schedules ON users.user_id = schedules.user_id WHERE users.user_id = $1;", [ userId ])
     .then((userSchedules) => {
         // generating schedules of the user
         userSchedules.forEach((schedule) => {
@@ -20,10 +20,6 @@ router.get('/', redirectToLogin, (req, res) => {
                         schedule.day = week[i - 1];
                     };
                 };   
-
-                // formating time not to show seconds
-                schedule.start_at = schedule.start_at.split(':').slice(0,2).join(':');
-                schedule.end_at = schedule.end_at.split(':').slice(0,2).join(':'); 
             }
 
             return schedule;

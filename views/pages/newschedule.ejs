@@ -5,40 +5,48 @@
     <%- include('../partials/navbar')%>
 </main>
     <!--HEADER GOES HERE-->
-    <div class="container">
-    <h1 style = "color: purple "> NEW USER SCHEDULE</h1>
+    <h1 style = "color: purple " class="text-center"> NEW USER SCHEDULE</h1>
 
-<form action="/schedules" method="post">
-    <div>
-        <label for="day">Preferred Working Days:</label>
-    <select id="day" name="day">
-        <option value="1">Monday</option>
-        <option value="2">Tuesday</option>
-        <option value="3">Wednesday</option>
-        <option value="4">Thursday</option>
-        <option value="5">Friday</option>
-        <option value="6">Saturday</option>
-        <option value="7">Sunday</option>
-    </select> 
-    </div>
+        <!-- showing error messages below if there issues -->
+        <div class="container">
+            <% if (messages.error ) { %> 
+            <p class="text-danger text-center"><%= messages.error %></p>
+            <% } %> 
+        </div>
 
-    <div>
-        <label for="start_at"> Shift Start Time: </label>
-        <input id="start_at" type="time" name="start_at" >
-    </div>
+        <!-- form -->
+        <div class="container text-center">
+            <div class="container d-table align-middle">
+                <form action="/schedules" method="post">
+                    <div>
+                        <label class="form-label" for="day">Preferred Working Days:</label>
+                    <select id="day" name="day">
+                        <option value="1">Monday</option>
+                        <option value="2">Tuesday</option>
+                        <option value="3">Wednesday</option>
+                        <option value="4">Thursday</option>
+                        <option value="5">Friday</option>
+                        <option value="6">Saturday</option>
+                        <option value="7">Sunday</option>
+                    </select> 
+                    </div>
 
-    <div>
-        <label for="end_at"> Shift End Time: </label>
-        <input id="end_at" type="time" name="end_at" >
-    </div>
+                    <div>
+                        <label class="form-label" for="start_at"> Shift Start Time: </label>
+                        <input id="start_at" type="time" name="start_at" >
+                    </div>
 
+                    <div>
+                        <label class="form-label" for="end_at"> Shift End Time: </label>
+                        <input id="end_at" type="time" name="end_at" >
+                    </div>
 
-    <button type="submit">Submit</button>
-
-
-
-    </form>
-    </div>
-</main>
+                    <div>
+                    <button class="btn btn-light btn-outline-dark" type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
     <!--FOOTER GOES HERE-->
     <%- include('../partials/footer')%>
