@@ -8,25 +8,28 @@
     <div class="container">
     <h1 style = "color: purple "> NEW USER SCHEDULE</h1>
 
-<form action="/new" method="post">
-    <div>
-        <label for="username">Insert Your Username:</label>
-        <input id="username" type="text" name="username">
-    </div>
-
+<form action="/schedules" method="post">
     <div>
         <label for="day">Preferred Working Days:</label>
-        <input id="day" type="text" name="day">
+    <select id="day" name="day">
+        <option value="1">Monday</option>
+        <option value="2">Tuesday</option>
+        <option value="3">Wednesday</option>
+        <option value="4">Thursday</option>
+        <option value="5">Friday</option>
+        <option value="6">Saturday</option>
+        <option value="7">Sunday</option>
+    </select> 
     </div>
 
     <div>
         <label for="start_at"> Shift Start Time: </label>
-        <input id="start_at" type="text" name="start_at" >
+        <input id="start_at" type="time" name="start_at" >
     </div>
 
     <div>
         <label for="end_at"> Shift End Time: </label>
-        <input id="end_at" type="text" name="end_at" >
+        <input id="end_at" type="time" name="end_at" >
     </div>
 
 
