@@ -2,16 +2,14 @@ const express = require('express');
 const router = express.Router();
 const db = require('../database');
 const bcrypt = require('bcrypt');
-
-const flash = require('express-flash');
-router.use(flash());
+const {redirectToHome} = require('../middleware');
 
 // Registration
-router.get('/', (req, res) => {
+router.get('/', redirectToHome, (req, res) => {
     res.render('pages/register');
 });
 
-router.post('/', (req, res) => {
+router.post('/', redirectToHome, (req, res) => {
     let { firstname, lastname, email, password, confirmed_password } = req.body;
     
 

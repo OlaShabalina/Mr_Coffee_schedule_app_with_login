@@ -9,10 +9,6 @@ const logoutRouter = require('./routes/logout');
 const schedulesRouter = require('./routes/schedules');
 const recoverPasswordRouter = require('./routes/recover-password');
 
-// Session redirection config 
-const {redirectToHome} = require('./middleware');
-const {redirectToLogin} = require('./middleware');
-
 const app = express();
 const session = require('express-session');
 
@@ -52,10 +48,10 @@ app.set('view engine', 'ejs');
 
 // Middleware routes
 app.use('/recover_password', recoverPasswordRouter);
-app.use('/register', redirectToHome, registerRouter);
-app.use('/login', redirectToHome, loginRouter);
-app.use('/', redirectToLogin, homeRouter);
-app.use('/logout', redirectToLogin, logoutRouter);
-app.use('/schedules', redirectToLogin, schedulesRouter);
+app.use('/register', registerRouter);
+app.use('/login', loginRouter);
+app.use('/', homeRouter);
+app.use('/logout', logoutRouter);
+app.use('/schedules', schedulesRouter);
 
 app.listen(PORT, () => console.log(`We are listening on http://localhost:${PORT}`));
