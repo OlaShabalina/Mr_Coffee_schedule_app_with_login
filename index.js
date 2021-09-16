@@ -22,7 +22,7 @@ app.use(express.urlencoded( { extended: false }));
 // Setting up our static folder
 app.use(express.static(path.join(__dirname,'public')));
 
-// Session configuration 
+// Session configuration
 app.use(session({
     cookie: {
         maxAge: 1000 * 60 * 60 * 24,
