@@ -71,7 +71,7 @@ router.post('/', redirectToLogin, (req, res) => {
           console.log(endTimeFromDatabaseConverted)
 
           // conditions when the time overlaps
-          return (time.day === Number(day) && startTimeConverted < startTimeFromDatabaseConverted && endTimeConverted > startTimeFromDatabaseConverted) || (time.day === Number(day) && startTimeConverted > startTimeFromDatabaseConverted && endTimeConverted < endTimeFromDatabaseConverted)
+          return (time.day === Number(day) && startTimeConverted <= startTimeFromDatabaseConverted && endTimeConverted >= startTimeFromDatabaseConverted) || (time.day === Number(day) && startTimeConverted >= startTimeFromDatabaseConverted && endTimeConverted <= endTimeFromDatabaseConverted)
         });
 
         console.log(overlap);
