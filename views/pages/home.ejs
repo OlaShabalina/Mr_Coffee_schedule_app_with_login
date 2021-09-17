@@ -9,27 +9,32 @@
 
     <h5 class="text-center text-success"> Please see below your schedules for the week:</p>
         <div class="container">
-        <div class="row gy-4 d-flex align-items-center justify-content-center">
-            <% for (let i = 0; i < userSchedules.length; i++) { %> 
-            <div class="col-sm-6">
-                <div class="card text-center">
-                    <div class="card-body">
-                        <% if (userSchedules[i].day !== null) { %> 
-                        <h5 class="card-title">Schedule <%= i + 1 %></h5>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><b>Day of the week:</b> <%= userSchedules[i].day %> </li>
-                            <li class="list-group-item"><b>Starts at:</b> <%= userSchedules[i].start_at %> </li>
-                            <li class="list-group-item"><b>Finishes at:</b> <%= userSchedules[i].end_at %> </li>
-                        </ul>   
-                        <% } else { %> 
-                            <p class="text-dark"> You don't have any schedules yet</p>
-                        <% }  %> 
+            <a href="/schedules/newschedule" class="btn btn-outline-secondary align-s button mb-3">Create new schedule</a>
+            <div class="container">
+                    <% if (messages.success_msg) { %> 
+                    <p><small class="fs-6 text-info"><%= messages.success_msg %></small></p>
+                    <% } %> 
+            </div>
+            <div class="row gy-4 d-flex align-items-center justify-content-center">
+                <% userSchedules.forEach((schedule, index) => { %> 
+                <div class="col-sm-6">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <% if (schedule.day !== null) { %> 
+                            <h5 class="card-title">Schedule <%= index + 1 %></h5>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><b>Day of the week:</b> <%= schedule.day %> </li>
+                                <li class="list-group-item"><b>Starts at:</b> <%= schedule.start_at %> </li>
+                                <li class="list-group-item"><b>Finishes at:</b> <%= schedule.end_at %> </li>
+                            </ul>   
+                            <% } else { %> 
+                                <p class="text-dark"> You don't have any schedules yet</p>
+                            <% }  %> 
+                        </div>
                     </div>
-                </div>
-            </div> 
-            <% } %> 
-            <a href="/schedules/newschedule" class="btn btn-secondary">Create new schedule</a>
-        </div>
+                </div> 
+                <% }) %> 
+            </div>
         </div>
 
 

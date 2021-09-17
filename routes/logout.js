@@ -1,8 +1,6 @@
 const express = require('express')
 const router = express.Router();
-
-const flash = require('express-flash');
-router.use(flash());
+const {redirectToLogin} = require('../middleware');
 
 router.get('/', (req, res) => {
     req.session.destroy(error => {
