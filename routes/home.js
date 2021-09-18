@@ -13,14 +13,14 @@ router.get('/', redirectToLogin, (req, res) => {
 
             if (schedule.day !== null) {
                 
-                // converting days of the week from numbers to actual days
+                // Converting numbers into days of the week
                 const week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-                week.forEach((day, index) => {
-                    if (index == schedule.day) {
-                        schedule.day = week[index - 1];
+                for (let i = 1; i <= 7; i++) {
+                    if (i == schedule.day) {
+                        schedule.day = week[i - 1];
                     };
-                }) 
-            }
+                };   
+            } 
 
             return schedule;
         })
