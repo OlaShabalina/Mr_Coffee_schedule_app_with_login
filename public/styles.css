@@ -140,6 +140,7 @@ idance .timetable {
 .idance .schedule .tab-pane {
     padding-top: 10px;
 }
+
 .scheduleItem.hidden {
     display: none;
 }

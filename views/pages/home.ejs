@@ -30,6 +30,7 @@
                             <a id="friday" value=5 class="nav-link">Fri</a>
                             <a id="saturday" value=6 class="nav-link">Sat</a>
                             <a id="sunday" value=7 class="nav-link">Sun</a>
+                            <a id="all" id="show-all" class="nav-link">All</a>
                           </nav>
                     
                         <div class="tab-content">
@@ -44,7 +45,7 @@
                                                 <% if (schedule.day !== null) { %> 
                                                 <h5 class="card-title text-center">Schedule <%= index + 1 %></h5>
                                                 <ul class="list-group list-group-flush">
-                                                    <li class="list-group-item week-day"><b>Day of the week</b> <%= schedule.day %></li>
+                                                    <li class="list-group-item week-day"><b>Day of the week:</b> <%= schedule.day %></li>
                                                     <li class="list-group-item"><b>Time: </b> <%= schedule.start_at %> - </b> <%= schedule.end_at %></li>
                                                 </ul>
                                                 <% } else { %> 
