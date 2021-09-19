@@ -1,5 +1,6 @@
     <!-- portion of head below -->
     <%- include('../partials/head') %>
+    <link rel="stylesheet" href="styles.css">
     <title>Document</title>
 </head>
 <body>
@@ -12,7 +13,7 @@
             <a href="/schedules/newschedule" class="btn btn-outline-secondary align-s button mb-3">Create new schedule</a>
             <div class="container">
                     <% if (messages.success_msg) { %> 
-                    <p><small class="fs-6"><%= messages.success_msg %></small></p>
+                    <p><small class="fs-6" style="color: #46c1be;"><%= messages.success_msg %></small></p>
                     <% } %> 
             </div>
 
