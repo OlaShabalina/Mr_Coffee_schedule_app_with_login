@@ -1,4 +1,10 @@
-/* CSS style for the pages with schedules (home and all schedules */
+/* css width setting for login and register page */
+
+.form-width-setup {
+    max-width: 500px;
+}
+
+/* CSS style for the pages with schedules (home and all schedules navbar filter) */
 .idance .classes-details ul.timetable {
     margin: 0 0 22px;
     padding: 0;
@@ -19,6 +25,11 @@ idance .timetable {
     position: relative;
     display: block;
 }
+
+#scheduleAdded {
+    color: #46c1be;
+}
+
 @media (min-width: 768px) {
     .idance .timetable-item {
         display: -webkit-box;
