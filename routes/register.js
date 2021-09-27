@@ -19,6 +19,18 @@ router.post('/', redirectToHome, (req, res) => {
     if (!firstname || !lastname || !email || !password || !confirmed_password) {
         console.log(errors)
         errors.push({ message: "Please enter all fields." });
+    };
+
+    if (!isNameValid(firstname)) {
+        errors.push({ message: "Please enter a valid name." });
+    }
+
+    if (!isNameValid(lastname)) {
+        errors.push({ message: "Please enter a valid last name." });
+    }
+
+    if (!isEmailValid(email)) {
+        errors.push({ message: "Please enter a valid email." });
     }
 
     if ( password.length < 6 ) {
@@ -64,5 +76,16 @@ router.post('/', redirectToHome, (req, res) => {
 })
 
 
+// validation functions for inputs 
+
+function isNameValid(input) {
+    return /^[A-Za-z\s\-`']+[\.]?[A-Za-z\s]*$/.test(input);
+};
+
+function isEmailValid(email) {
+    return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+      email
+    );
+};
 
 module.exports = router;
