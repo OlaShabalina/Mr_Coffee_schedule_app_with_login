@@ -7,9 +7,14 @@
     <div class="container">
         <h3 class="text-center"> Something went wrong or this page doesn't exists</h1> 
         <div class="container text-center">
-            <a href="/" class="text-success">Back to Login page</a>
+            <a href="/" class="text-success">Back to the app</a>
         </div>
         <img class="rounded mx-auto d-block img-fluid" src="https://media.istockphoto.com/vectors/error-page-not-found-website-banner-vector-id654971856?k=6&m=654971856&s=612x612&w=0&h=vhEqSbb2hVtxvackiu2z8k-Ac5NlYPfzWgQRYY_9FEg=" alt="too bad">
+        <% if (typeof error !== 'undefined' ) { %>
+        <div>
+            <p class="text-danger"><%error%></p>
+        </div>
+        <% } %> 
     </div>
 
     <!-- Footer -->

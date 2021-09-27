@@ -45,8 +45,8 @@ router.post('/', redirectToHome, (req, res) => {
                     res.redirect('/login');
                 })
                 .catch((error) => {
-                    console.log(error)
-                    res.json(error)
+                    console.log(error);
+                    res.render('pages/404error', { error });
                 });
             };
         }); 
