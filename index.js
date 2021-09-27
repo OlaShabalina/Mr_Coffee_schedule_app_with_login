@@ -8,6 +8,7 @@ const loginRouter = require('./routes/login');
 const logoutRouter = require('./routes/logout');
 const schedulesRouter = require('./routes/schedules');
 const recoverPasswordRouter = require('./routes/recover-password');
+const pageNotFoundRouter = require('./routes/404eror');
 
 const app = express();
 const session = require('express-session');
@@ -53,5 +54,6 @@ app.use('/login', loginRouter);
 app.use('/', homeRouter);
 app.use('/logout', logoutRouter);
 app.use('/schedules', schedulesRouter);
+app.use('/*', pageNotFoundRouter);
 
 app.listen(PORT, () => console.log(`We are listening on http://localhost:${PORT}`));

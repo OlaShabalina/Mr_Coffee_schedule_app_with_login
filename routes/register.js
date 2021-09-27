@@ -12,36 +12,15 @@ router.get('/', redirectToHome, (req, res) => {
 router.post('/', redirectToHome, (req, res) => {
     let { firstname, lastname, email, password, confirmed_password } = req.body;
     
-
-    // Backend validation for the form
+    // Back-end validation for the form
     const errors = [];
 
-    if (!firstname || !lastname || !email || !password || !confirmed_password) {
-        console.log(errors)
-        errors.push({ message: "Please enter all fields." });
-    };
-
-    if (!isNameValid(firstname)) {
-        errors.push({ message: "Please enter a valid name." });
-    }
-
-    if (!isNameValid(lastname)) {
-        errors.push({ message: "Please enter a valid last name." });
-    }
-
-    if (!isEmailValid(email)) {
-        errors.push({ message: "Please enter a valid email." });
-    }
-
-    if ( password.length < 6 ) {
-        errors.push({ message: "Password should be at least 6 characters." });
-    }
-
-    if ( password !== confirmed_password ) {
-        errors.push({ message: "Your confirmation password doesn't match" });
-    }
-
-    errors.forEach(error => console.log(error.message))
+    if (!firstname || !lastname || !email || !password || !confirmed_password) errors.push({ message: "Please enter all fields." });
+    if (!isNameValid(firstname)) errors.push({ message: "Please enter a valid name." });
+    if (!isNameValid(lastname)) errors.push({ message: "Please enter a valid last name." });  
+    if (!isEmailValid(email)) errors.push({ message: "Please enter a valid email." });
+    if ( password.length < 6 ) errors.push({ message: "Password should be at least 6 characters." });
+    if ( password !== confirmed_password ) errors.push({ message: "Your confirmation password doesn't match" });
 
     if (errors.length > 0) {
         res.render('pages/register', { errors });
@@ -66,8 +45,8 @@ router.post('/', redirectToHome, (req, res) => {
                     res.redirect('/login');
                 })
                 .catch((error) => {
-                    console.log(error)
-                    res.json(error)
+                    console.log(error);
+                    res.render('pages/404error', { error });
                 });
             };
         }); 

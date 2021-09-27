@@ -10,27 +10,21 @@ router.get("/", redirectToLogin, (req, res) => {
         .then(function(databaseschedules) {
 
           // Converting numbers into days of the week
-          databaseschedules.forEach((schedule) => {
-            const week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-              for (let i = 1; i <= 7; i++) {
-                  if (i == schedule.day) {
-                      schedule.day = week[i - 1];
-                  };
-              };   
-          })
+          convertNumbersToDays(databaseschedules);
             // console.log(databaseschedules)
             res.render('pages/schedules', {
                 schedules:databaseschedules
               });
         })
-        
-        .catch(function(error) {
-            console.log(error)
+        .catch((error) => {
+            console.log(error);
+            res.render('pages/404error', { error });
         });
     });
 
 
 router.post('/', redirectToLogin, (req, res) => {
+
     // const id = req.session.userId
     const id = req.session.userId;
     const {day, start_at, end_at} = req.body;
@@ -62,19 +56,9 @@ router.post('/', redirectToLogin, (req, res) => {
           const startTimeFromDatabaseConverted = timeConversion(time.start_at);
           const endTimeFromDatabaseConverted = timeConversion(time.end_at);
 
-          // testing
-          console.log(time.day)
-          console.log(Number(day))
-          console.log(startTimeConverted)
-          console.log(startTimeFromDatabaseConverted)
-          console.log(endTimeConverted)
-          console.log(endTimeFromDatabaseConverted)
-
           // conditions when the time overlaps
           return (time.day === Number(day) && startTimeConverted <= startTimeFromDatabaseConverted && endTimeConverted >= startTimeFromDatabaseConverted) || (time.day === Number(day) && startTimeConverted >= startTimeFromDatabaseConverted && startTimeConverted < endTimeFromDatabaseConverted)
         });
-
-        console.log(overlap);
 
         if (overlap) {
           req.flash("error", "There is an overlap with your previous schedules.");
@@ -91,8 +75,8 @@ router.post('/', redirectToLogin, (req, res) => {
         }
       })
       .catch(error => {
-        console.log(error)
-        res.send(error)
+        console.log(error);
+        res.render('pages/404error', { error });
       })
     }
     
@@ -107,26 +91,30 @@ router.post('/', redirectToLogin, (req, res) => {
     db.any("SELECT users.user_id,firstname,lastname,day,TO_CHAR(start_at, 'HH12:MI AM') start_at,TO_CHAR(end_at, 'HH12:MI AM') end_at FROM users INNER JOIN schedules ON users.user_id = schedules.user_id WHERE schedules.user_id = $1;", req.params.id)
     .then((schedules) => {
       const userName = schedules[0].firstname + ' ' + schedules[0].lastname
-      schedules.forEach((schedule) => {
 
-        // Converting numbers into days of the week
-        const week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-          for (let i = 1; i <= 7; i++) {
-              if (i == schedule.day) {
-                  schedule.day = week[i - 1];
-              };
-          };   
-      })
-      res.render('pages/schedulesid', {
-        schedules,
-        userName
-      })
+      // converting numbers into days of the week
+      convertNumbersToDays(schedules);
+      res.render('pages/schedulesid', { schedules, userName })
     })
     .catch(error => {
-      console.log(error)
-      res.send(error)
+      console.log(error);
+      res.render('pages/404error', { error });
     })
 })
+
+
+// Function to convert numbers to days
+const convertNumbersToDays = (schedules) => {
+  schedules.forEach((schedule) => {
+    const week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+      for (let i = 1; i <= 7; i++) {
+          if (i == schedule.day) {
+              schedule.day = week[i - 1];
+          };
+      };   
+  })
+}
+
 
 
 
