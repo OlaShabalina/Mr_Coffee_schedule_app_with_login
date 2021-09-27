@@ -25,7 +25,8 @@ router.get("/", redirectToLogin, (req, res) => {
         })
         
         .catch(function(error) {
-            console.log(error)
+            console.log(error);
+            res.render('pages/404error');
         });
     });
 
