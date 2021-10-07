@@ -1,36 +1,44 @@
 <%- include('../partials/head')%>
-
+    <!-- adding additional css styles -->
+    <link rel="stylesheet" href="styles.css">
     <title>Login page</title>
 </head>
 <body>
-    <h1 class="text-center">Log in to access the MR Coffee schedule app!</h1>
-    <div class="container">
-        <div class="container">
-        <ul>
-            <% if (messages.success_msg) { %> 
-            <li class="text-success"><%= messages.success_msg %></li>
-            <% } %> 
-        </ul>
-        <ul>
-            <% if (messages.error ) { %> 
-            <li class="text-danger"><%= messages.error %></li>
-            <% } %> 
-        </ul>
+    <main>
+        <h2 class="text-center">Log in to access the MR Coffee schedule app!</h1>
+        <div class="container form-width-setup">
+            <div class="container">
+                <ul>
+                    <% if (messages.success_msg) { %> 
+                    <li class="text-success"><%= messages.success_msg %></li>
+                    <% } %> 
+                </ul>
+                <ul>
+                    <% if (messages.error ) { %> 
+                    <li class="text-danger"><%= messages.error %></li>
+                    <% } %> 
+                </ul>
+                <ul>
+                    <% if (typeof message !== 'undefined') { %> 
+                    <li class="text-danger"><%= message %></li>
+                    <% } %> 
+                </ul>
+            </div>
+            <form action="/login" method="POST" id="log-in-form" novalidate>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="email" name="email" aria-describedby="email">
+                <div id="email" class="form-text">We'll never share your email with anyone else.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password">
+                </div>
+                <button type="submit" class="btn btn-secondary" value="Register">Log in</button>
+                <a href="/register" class="btn btn-secondary">Register new user</a>
+                <a href="/recover_password" class="text-success">Forgot password</a>
+            </form>
         </div>
-        <form action="/login" method="POST" id="create-user-form" novalidate>
-            <div class="mb-3">
-                <label for="email" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="email" name="email" aria-describedby="email">
-            <div id="email" class="form-text">We'll never share your email with anyone else.</div>
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password">
-            </div>
-            <button type="submit" class="btn btn-secondary" value="Register">Log in</button>
-            <a href="/register" class="btn btn-secondary">Register new user</a>
-            <a href="/recover_password" class="text-success">Forgot password</a>
-        </form>
-    </div>
+    </main>
     
 <%- include('../partials/footer')%>

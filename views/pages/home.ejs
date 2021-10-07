@@ -1,14 +1,72 @@
     <!-- portion of head below -->
     <%- include('../partials/head') %>
+    <link rel="stylesheet" href="styles.css">
     <title>Document</title>
 </head>
 <body>
     <!-- header including nav bar -->
     <%- include('../partials/navbar') %>
-    <h1>Hello <%= user %> !</h1>
+    <main>
+        <h1 class="text-center">Hello <%= userName  %>!</h1>
 
+        <h5 class="text-center"> Please see below your schedules for the week:</p>
+        <div class="container">
+            <a href="/schedules/newschedule" class="btn btn-outline-secondary align-s button mb-3">Create new schedule</a>
+            <div class="container-sm">
+                    <!-- success messaged about creating new schedule -->
+                    <% if (messages.success_msg) { %> 
+                    <p><small class="fs-6" id="scheduleAdded"><%= messages.success_msg %></small></p>
+                    <% } %> 
+            </div>
 
-
+            <div class="idance">
+                <div class="schedule content-block">
+                    <div class="container">                    
+                        <div class="timetable">
+                    
+                            <!-- Schedule Top Navigation -->
+                            <nav id="days-filter" class="nav nav-tabs">
+                            <a id="monday" value=1 class="nav-link">Mon</a>
+                            <a id="tuesday" value=2 class="nav-link">Tue</a>
+                            <a id="wednesday" value=3 class="nav-link">Wed</a>
+                            <a id="thursday" value=4 class="nav-link">Thu</a>
+                            <a id="friday" value=5 class="nav-link">Fri</a>
+                            <a id="saturday" value=6 class="nav-link">Sat</a>
+                            <a id="sunday" value=7 class="nav-link">Sun</a>
+                            <a id="all" id="show-all" class="nav-link">All</a>
+                            </nav>
+                    
+                        <div class="tab-content">
+                            <div class="tab-pane show active">
+                                <div class="row">
+                    
+                                    <!-- Schedule Items -->
+                                    <% userSchedules.forEach((schedule, index) => { %> 
+                                    <div class="col-md-6 scheduleItem">
+                                        <div class="timetable-item">
+                                            <div class="card-body text-center">
+                                                <% if (schedule.day !== null) { %> 
+                                                <h5 class="card-title text-center">Schedule <%= index + 1 %></h5>
+                                                <ul class="list-group list-group-flush">
+                                                    <li class="list-group-item week-day"><b>Day of the week:</b> <%= schedule.day %></li>
+                                                    <li class="list-group-item"><b>Time: </b> <%= schedule.start_at %> - </b> <%= schedule.end_at %></li>
+                                                </ul>
+                                                <% } else { %> 
+                                                    <p class="text-dark"> You don't have any schedules yet</p>
+                                                <% }  %> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% }) %>
+                                </div>
+                            </div>
+                        </div>
+            
+                    </div>
+                </div>
+            </div>
+    </main>
+        <script src="schedules-page-validation.js"></script>
     <!-- footer and end of page below -->
     <%- include('../partials/footer') %>
 

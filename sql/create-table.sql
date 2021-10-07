@@ -3,10 +3,10 @@ DROP TABLE IF EXISTS users CASCADE;
 
 CREATE TABLE IF NOT EXISTS users (
     user_id SERIAL PRIMARY KEY,
-    firstname VARCHAR(150),
-    lastname VARCHAR(150),
-    email VARCHAR(100) UNIQUE,
-    password VARCHAR(250)
+    firstname VARCHAR(150) NOT NULL,
+    lastname VARCHAR(150) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(250) NOT NULL
 );
 
 -- Creating table for storying schedules

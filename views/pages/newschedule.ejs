@@ -1,0 +1,53 @@
+<%- include('../partials/head')%>
+    <title>New schedule</title>
+</head>
+<body>
+    <%- include('../partials/navbar')%>
+</main>
+
+    <h1 style="color: purple" class="text-center">Create a new schedule</h1>
+
+        <!-- showing error messages below if there are issues -->
+        <div class="container">
+            <% if (messages.error ) { %> 
+            <p class="text-danger text-center"><%= messages.error %></p>
+            <% } %> 
+        </div>
+
+        <!-- form content -->
+        <div class="container text-center">
+            <div class="container d-table align-middle">
+                <form action="/schedules" method="post">
+                    <div>
+                        <label class="form-label" for="day">Preferred Working Days:</label>
+                        <select id="day" name="day" class="form-select">
+                            <option value="1">Monday</option>
+                            <option value="2">Tuesday</option>
+                            <option value="3">Wednesday</option>
+                            <option value="4">Thursday</option>
+                            <option value="5">Friday</option>
+                            <option value="6">Saturday</option>
+                            <option value="7">Sunday</option>
+                        </select> 
+                    </div>
+
+                    <div>
+                        <label class="form-label" for="start_at"> Shift Start Time: </label>
+                        <input id="start_at" type="time" name="start_at" class="form-control">
+                    </div>
+
+                    <div>
+                        <label class="form-label" for="end_at"> Shift End Time: </label>
+                        <input id="end_at" type="time" name="end_at" class="form-control mb-3">
+                    </div>
+
+                    <div>
+                        <button class="btn btn-outline-secondary align-s button" type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+    
+    <!--FOOTER GOES HERE-->
+    <%- include('../partials/footer')%>

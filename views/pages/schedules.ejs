@@ -1,0 +1,59 @@
+<%- include('../partials/head')%>
+<link rel="stylesheet" href="styles.css">
+    <title>Schedules</title>
+</head>
+<body>
+    <%- include('../partials/navbar')%>
+<main>
+
+<div class="idance">
+    <div class="schedule content-block">
+        <div class="container">
+            <h1 data-aos="zoom-in-up" class="aos-init aos-animate text-center" style = "color: rgb(221, 127, 221) ">All schedules</h2>
+        
+            <div class="timetable">
+        
+              <!-- Schedule Top Navigation -->
+              <nav id="days-filter" class="nav nav-tabs">
+                <a id="monday" value=1 class="nav-link">Mon</a>
+                <a id="tuesday" value=2 class="nav-link">Tue</a>
+                <a id="wednesday" value=3 class="nav-link">Wed</a>
+                <a id="thursday" value=4 class="nav-link">Thu</a>
+                <a id="friday" value=5 class="nav-link">Fri</a>
+                <a id="saturday" value=6 class="nav-link">Sat</a>
+                <a id="sunday" value=7 class="nav-link">Sun</a>
+                <a id="all" id="show-all" class="nav-link">All</a>
+              </nav>
+        
+            <div class="tab-content">
+                <div class="tab-pane show active">
+                    <div class="row">
+        
+                        <!-- Schedule Items -->
+                        <% for (let i = 0; i < schedules.length; i++) {%>
+                        <div class="col-md-6 scheduleItem">
+                            <div class="timetable-item">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title text-center">Schedule <%= schedules[i].schedule_id %></h5>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item"><b>User:</b> <%= schedules[i].firstname %> <%= schedules[i].lastname %> </li>
+                                        <li class="list-group-item week-day"><b>Day of the week:</b> <%= schedules[i].day %></li>
+                                        <li class="list-group-item"><b>Time: </b> <%= schedules[i].start_at %> - </b> <%= schedules[i].end_at %></li>
+                                    </ul>
+                                    <a href="/schedules/<%= schedules[i].user_id %> " class="btn btn-secondary">See schedules of user <%= schedules[i].user_id %></a>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</main>
+    <!--FOOTER GOES HERE-->
+    <script src="schedules-page-validation.js"></script>
+<%- include('../partials/footer')%>
