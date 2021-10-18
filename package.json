@@ -7,7 +7,7 @@
     "dev": "nodemon -r dotenv/config index.js",
     "start": "node -r dotenv/config index.js",
     "create-db": "psql -U postgres -f sql/create-db.sql",
-    "create-table": "psql -U postgres -d schedules_project4 -f sql/create-table.sql",
+    "create-table": "psql -U postgres -d d2hgi8a4joc44g -f sql/create-table.sql",
     "seed-table": "psql -U postgres -d schedules_project4 -f sql/seed-table.sql",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
